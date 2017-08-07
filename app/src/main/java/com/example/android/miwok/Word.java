@@ -8,17 +8,20 @@ public class Word {
     private String mMiwokWord;
     private String mTranslatedWord;
     private int mResourceId = NO_IMAGE_PROVIDED; //To hold image resource ID.
+    private int mAudioResourceID;
     private static int NO_IMAGE_PROVIDED = -1;
 
-    public Word(String mMiwokWord, String mTranslatedWord){
+    public Word(String mMiwokWord, String mTranslatedWord, int mAudioResourceID){
         this.mMiwokWord = mMiwokWord;
         this.mTranslatedWord = mTranslatedWord;
+        this.mAudioResourceID = mAudioResourceID;
     }
 
-    public Word(String mMiwokWord, String mTranslatedWord, int mResourceId) {
+    public Word(String mMiwokWord, String mTranslatedWord, int mResourceId, int mAudioResourceID) {
         this.mMiwokWord = mMiwokWord;
         this.mTranslatedWord = mTranslatedWord;
         this.mResourceId = mResourceId;
+        this.mAudioResourceID = mAudioResourceID;
     }
 
     public String getMiwokWord() {
@@ -43,6 +46,10 @@ public class Word {
 
     public void setmResourceId(int mResourceId) {
         this.mResourceId = mResourceId;
+    }
+
+    public int getAudioResourceID() {
+        return mAudioResourceID;
     }
 
     public boolean hasImage(){
