@@ -54,6 +54,15 @@ public class NumbersActivity extends AppCompatActivity {
         //GridView gridView = (GridView) findViewById(R.id.list);
         //gridView.setAdapter(itemsAdapter);
     }
+
+    /**
+     * Performs clean up action on stopping the app
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
+    }
     /**
      * Clean up the media player by releasing its resources.
      */

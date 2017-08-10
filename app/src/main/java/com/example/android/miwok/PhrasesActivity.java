@@ -53,6 +53,14 @@ public class PhrasesActivity extends AppCompatActivity {
         });
     }
     /**
+     * Performs clean up action on stopping the app
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
+    }
+    /**
      * Clean up the media player by releasing its resources.
      */
     private void releaseMediaPlayer() {
