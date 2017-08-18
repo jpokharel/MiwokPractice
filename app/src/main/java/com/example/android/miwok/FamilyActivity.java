@@ -3,7 +3,9 @@ package com.example.android.miwok;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,6 +21,7 @@ public class FamilyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.words_list);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final ArrayList<Word> words = new ArrayList<Word>();
         words.add(new Word("әpә","father",R.drawable.family_father,R.raw.family_father));
@@ -107,4 +110,18 @@ public class FamilyActivity extends AppCompatActivity {
             }
         }
     };
+
+    /**
+     * To handle the UP Button implementation to transfer intent to the parent activity.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
