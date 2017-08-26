@@ -1,27 +1,37 @@
 package com.example.android.miwok;
 
+
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ColorsActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ColorsFragment extends Fragment {
 
     private MediaPlayer mMediaPlayer;
     private AudioManager mAudioManager;
 
+    public ColorsFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.words_list);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.words_list,container,false);
+        mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         final ArrayList<Word> words = new ArrayList<Word>();
         words.add(new Word("weṭeṭṭi","red",R.drawable.color_red,R.raw.color_red));
@@ -35,8 +45,8 @@ public class ColorsActivity extends AppCompatActivity {
 
 
 
-        WordAdapter itemsAdapter = new WordAdapter(this, words,R.color.category_colors);
-        ListView listView = (ListView) findViewById(R.id.list);
+        WordAdapter itemsAdapter = new WordAdapter(getActivity(), words,R.color.category_colors);
+        ListView listView = (ListView) rootView.findViewById(R.id.list);
         listView.setAdapter(itemsAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -50,7 +60,7 @@ public class ColorsActivity extends AppCompatActivity {
 
                 //If audio focus granted.
                 if(result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    mMediaPlayer = MediaPlayer.create(ColorsActivity.this, words.get(i).getAudioResourceID());
+                    mMediaPlayer = MediaPlayer.create(getActivity(), words.get(i).getAudioResourceID());
                     mMediaPlayer.start();
                     mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
@@ -61,13 +71,12 @@ public class ColorsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        return rootView;
     }
 
-     /**
-     * Performs clean up action on stopping the app
-     */
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         releaseMediaPlayer();
     }
@@ -109,17 +118,4 @@ public class ColorsActivity extends AppCompatActivity {
         }
     };
 
-    /**
-     * To handle the UP Button implementation to transfer intent to the parent activity.
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
